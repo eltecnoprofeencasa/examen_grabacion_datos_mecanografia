@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Examen de mecanografía online para evaluación educativa.">
+  <title>Examen de mecanografía</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section id="setup-screen" class="screen">
+      <div class="card setup-card">
+        <header class="brand">
+          <h1>Examen de mecanografía</h1>
+          <p>Prueba de velocidad y precisión</p>
+        </header>
+
+        <form id="setup-form" novalidate>
+          <div class="form-grid">
+            <label class="field">
+              <span>Nombre del alumno <strong>*</strong></span>
+              <input id="student-name" type="text" maxlength="80" autocomplete="off" required>
+              <small id="name-error" class="field-error" aria-live="polite"></small>
+            </label>
+
+            <label class="field">
+              <span>Grupo <em>(opcional)</em></span>
+              <input id="student-group" type="text" maxlength="40" autocomplete="off">
+            </label>
+
+            <fieldset class="choice-group">
+              <legend>Número de líneas</legend>
+              <div class="choices">
+                <label><input type="radio" name="lines" value="10" checked><span>10</span></label>
+                <label><input type="radio" name="lines" value="20"><span>20</span></label>
+                <label><input type="radio" name="lines" value="30"><span>30</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="choice-group">
+              <legend>Dificultad</legend>
+              <div class="choices">
+                <label><input type="radio" name="difficulty" value="facil" checked><span>Fácil</span></label>
+                <label><input type="radio" name="difficulty" value="medio"><span>Medio</span></label>
+                <label><input type="radio" name="difficulty" value="dificil"><span>Difícil</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="choice-group choice-group-wide">
+              <legend>Tipo de examen</legend>
+              <div class="choices choices-exam">
+                <label><input type="radio" name="examType" value="texto" checked><span>Teclado de texto</span></label>
+                <label><input type="radio" name="examType" value="numerico"><span>Teclado numérico</span></label>
+              </div>
+            </fieldset>
+          </div>
+
+          <button class="btn btn-primary btn-large" type="submit">Comenzar examen</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="exam-screen" class="screen hidden" aria-label="Examen">
+      <div class="exam-topbar">
+        <div>
+          <span class="eyebrow">Examen en curso</span>
+          <strong id="progress-text">Línea 1 de 10</strong>
+        </div>
+        <div class="timer-box" aria-live="polite">
+          <span>Tiempo</span>
+          <strong id="timer">00:00</strong>
+        </div>
+        <button id="cancel-exam" class="btn btn-danger" type="button">Anular examen</button>
+      </div>
+
+      <div class="exam-card">
+        <div class="reference-panel">
+          <span class="panel-label">Escribe exactamente:</span>
+          <div id="reference-line" class="typing-line reference-line" aria-label="Línea de referencia"></div>
+        </div>
+
+        <div class="writing-panel">
+          <span class="panel-label">Tu escritura:</span>
+          <div id="writing-line" class="typing-line writing-line" aria-label="Zona de escritura"></div>
+          <textarea id="typing-input" class="typing-input" aria-label="Escribe la línea aquí" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+          <div id="continue-message" class="continue-message" aria-live="polite">Presiona ENTER para continuar</div>
+        </div>
+      </div>
+
+      <div class="exam-footer">
+        <span id="status-text">Empieza a escribir para iniciar el tiempo.</span>
+        <span id="exam-mode-label"></span>
+      </div>
+    </section>
+
+    <section id="results-screen" class="screen hidden" aria-label="Resultados">
+      <div class="card results-card">
+        <header class="results-header">
+          <span class="eyebrow">Resultado</span>
+          <h1>Resultados del examen</h1>
+        </header>
+
+        <div id="results-summary" class="results-summary"></div>
+
+        <div class="score-grid">
+          <div class="score-box">
+            <span>Precisión</span>
+            <strong id="precision-score">0,00 / 5</strong>
+          </div>
+          <div class="score-box">
+            <span>Velocidad</span>
+            <strong id="speed-score">0,00 / 5</strong>
+          </div>
+          <div class="score-box score-main">
+            <span>Nota final</span>
+            <strong id="final-score">0,00 / 10</strong>
+          </div>
+        </div>
+
+        <div id="result-explanation" class="result-explanation"></div>
+
+        <div class="result-actions">
+          <button id="download-result" class="btn btn-primary" type="button">Descargar resultado</button>
+          <button id="new-exam" class="btn btn-secondary" type="button">Realizar otro examen</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="confirm-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal-card">
+      <h2 id="confirm-title">¿Quieres anular el examen?</h2>
+      <p>Se perderá el progreso actual.</p>
+      <div class="modal-actions">
+        <button id="confirm-cancel" class="btn btn-secondary" type="button">Continuar</button>
+        <button id="confirm-abort" class="btn btn-danger" type="button">Anular examen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/content.js"></script>
+  <script src="js/scoring.js"></script>
+  <script src="js/exam.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
