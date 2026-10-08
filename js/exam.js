@@ -69,8 +69,10 @@
 
       if (event.key === "Enter") {
         event.preventDefault();
-        if (this.currentInput.length === 0) {
-          this.emit("status", "Escribe al menos un carácter antes de continuar.");
+        // ENTER solo permite avanzar cuando la línea está completamente escrita.
+        // Si aún faltan caracteres, se ignora sin generar errores ni cambiar estadísticas.
+        if (this.currentInput.length < this.currentTarget.length) {
+          // ENTER no tiene ningún efecto mientras la línea esté incompleta.
           this.focusInput();
           return;
         }
@@ -119,8 +121,9 @@
     }
 
     finishLine() {
-      const missing = Math.max(0, this.currentTarget.length - this.currentInput.length);
-      this.errors += missing;
+      // Esta función solo debe ejecutarse con la línea completa.
+      if (this.currentInput.length < this.currentTarget.length) return;
+
       this.lineStats.push({
         target: this.currentTarget,
         input: this.currentInput,
@@ -128,7 +131,7 @@
         targetLength: this.currentTarget.length,
         correctCharacters: this.currentVisual.filter(c => c.correct).length,
         wrongCharacters: this.currentVisual.filter(c => !c.correct).length,
-        missingCharacters: missing
+        missingCharacters: 0
       });
 
       if (this.lineIndex >= this.lines.length - 1) {

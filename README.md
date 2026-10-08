@@ -1,87 +1,69 @@
-# Examen de mecanografía
+# Examen de mecanografía version 1.2
 
-Aplicación web estática para evaluar mecanografía de texto y teclado numérico sin base de datos ni servidor.
+Aplicación web estática para realizar exámenes de mecanografía en navegador.
 
-## Estructura
+## Tecnologías
 
-- `index.html`: estructura de las pantallas de configuración, examen y resultados.
-- `css/styles.css`: diseño responsive y estilos de impresión.
-- `js/content.js`: banco de frases y operaciones.
-- `js/scoring.js`: cálculo de PPM, errores y puntuación.
-- `js/exam.js`: motor del examen, líneas, cursores, temporizador, ENTER, BACKSPACE y cancelación.
-- `js/app.js`: interfaz, navegación, resultados, privacidad y descarga mediante impresión del navegador.
-- `tests/test-scoring.js`: pruebas automáticas de los cinco casos de puntuación solicitados.
+- HTML5
+- CSS3
+- JavaScript vanilla
 
-## Funciones principales
+No necesita servidor, base de datos ni instalación.
 
-- 10, 20 o 30 líneas.
-- Dificultad fácil, media y difícil.
-- Teclado de texto y teclado numérico.
-- Una sola línea visible cada vez.
-- Cursor visual en la línea de referencia y en la zona de escritura.
-- Corrección inmediata mediante verde oscuro y rojo.
-- Límite estricto de caracteres por línea.
-- Mensaje no intrusivo `Presiona ENTER para continuar` al llegar al final.
-- Registro de errores aunque se utilice BACKSPACE para corregir.
-- Temporizador iniciado con la primera pulsación real.
-- Botón `Anular examen` con confirmación.
-- Bloqueo de copiar, cortar, pegar y arrastrar texto.
-- Resultados sin fecha.
-- Descarga mediante el diálogo de impresión de Chrome o Edge, seleccionando `Guardar como PDF`.
-- Sin base de datos, cuentas, servidor ni servicios externos.
+## Modalidades
 
-## Banco de contenidos
+- Teclado de texto
+- Teclado numérico
 
-Editar `js/content.js`.
+## Dificultades
 
-Los textos están organizados en:
+- Fácil
+- Medio
+- Difícil
 
-- `TypingContent.TEXT.facil`
-- `TypingContent.TEXT.medio`
-- `TypingContent.TEXT.dificil`
+## Funcionamiento
 
-Las operaciones están organizadas en:
+El examen muestra una línea cada vez. El alumno debe escribir exactamente la misma cantidad de caracteres que aparecen en la referencia. Al completar la línea aparece el mensaje «Presiona ENTER para continuar».
 
-- `TypingContent.NUMERIC.facil`
-- `TypingContent.NUMERIC.medio`
-- `TypingContent.NUMERIC.dificil`
+ENTER solo permite avanzar cuando la línea está completamente escrita. Si se pulsa antes, la pulsación se ignora y no genera errores ni modifica las estadísticas.
 
-En teclado numérico se utilizan exclusivamente números, punto decimal y los operadores `+`, `-`, `*` y `/`. No hay espacios, comas ni signo `=`.
+BACKSPACE permite corregir visualmente, pero no elimina los errores históricos ya contabilizados.
+
+El temporizador comienza con el primer carácter real escrito, no al comenzar el examen.
+
+Las líneas largas de dificultad Media y Difícil se ajustan al espacio disponible y se pueden distribuir en varias líneas para evitar desplazamiento horizontal.
+
+## Contenido numérico
+
+El modo numérico utiliza números, punto decimal y los operadores `+`, `-`, `*` y `/`. No utiliza espacios, comas ni `=`.
 
 ## Puntuación
 
-Editar `js/scoring.js`.
-
-La precisión vale 5 puntos. Hasta un 5 % de error se obtienen 5 puntos. Entre el 5 % y el 10 % la puntuación disminuye linealmente hasta 0. Con más de un 10 % se mantienen 0 puntos.
-
-La velocidad vale 5 puntos. Se obtienen 5 puntos con 300 PPM o más. Por debajo se calcula proporcionalmente.
-
-`PPM` significa pulsaciones por minuto.
+- PPM: pulsaciones por minuto.
+- Precisión: 0 a 5 puntos según porcentaje de errores.
+- Velocidad: 0 a 5 puntos, con 300 PPM como máximo.
+- Nota final: precisión + velocidad, máximo 10 puntos.
 
 ## Pruebas
 
-Con Node.js instalado, desde la carpeta del proyecto:
+Pruebas de puntuación:
 
 ```bash
 node tests/test-scoring.js
 ```
 
-Debe aparecer:
+Pruebas adicionales de comportamiento, ENTER, contenido numérico y ajuste responsive:
 
-```text
-Todas las pruebas de puntuación han pasado correctamente.
+```bash
+node tests/test-exam-behavior.js
 ```
 
 ## Publicación
 
-La aplicación es estática. Puede publicarse subiendo `index.html`, `css/` y `js/` a un repositorio y activando GitHub Pages, o utilizando un servicio de alojamiento estático como Netlify o Cloudflare Pages.
+La aplicación está preparada para publicarse como sitio estático en GitHub Pages, Cloudflare Pages, Netlify u otros servicios equivalentes.
 
-No necesita compilación.
+Para GitHub Pages, `index.html` debe quedar en la raíz del repositorio y la publicación debe realizarse desde la rama `main` y la carpeta `/root`.
 
 ## PDF
 
-El botón `Descargar resultado` abre el diálogo de impresión del navegador. En Chrome o Edge se puede seleccionar `Guardar como PDF`. Los estilos de impresión ocultan los botones y las pantallas del examen. No se genera ni muestra la fecha.
-
-## Privacidad
-
-Los datos del alumno y los resultados se mantienen en memoria mientras dura la página. No existe base de datos y no se envían datos personales a servicios externos.
+El botón de resultados utiliza la impresión del navegador para permitir guardar el resultado como PDF. El contenido del resultado no muestra la fecha del examen.

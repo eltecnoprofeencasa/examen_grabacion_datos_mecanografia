@@ -69,9 +69,9 @@ button { cursor: pointer; }
 .reference-panel, .writing-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
 .writing-panel { position: relative; background: var(--surface-alt); }
 .panel-label { display: block; color: var(--muted); font-size: .8rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; }
-.typing-line { position: relative; width: 100%; min-height: 78px; padding: 15px 16px; overflow-x: auto; overflow-y: hidden; white-space: pre; font-family: "Cascadia Mono", Consolas, "Courier New", monospace; font-size: clamp(1.2rem, 2.5vw, 1.75rem); line-height: 1.5; letter-spacing: .02em; }
+.typing-line { position: relative; width: 100%; min-height: 78px; padding: 15px 16px; overflow: hidden; white-space: normal; overflow-wrap: anywhere; word-break: normal; font-family: "Cascadia Mono", Consolas, "Courier New", monospace; font-size: clamp(1.05rem, 2.1vw, 1.6rem); line-height: 1.55; letter-spacing: .02em; }
 .reference-line { color: var(--blue); }
-.writing-line { color: var(--green); min-height: 78px; }
+.writing-line { color: var(--green); min-height: 78px; overflow-wrap: anywhere; }
 .char { position: relative; display: inline-block; min-width: .61em; }
 .char.correct { color: var(--green); }
 .char.wrong { color: var(--red); }
@@ -115,7 +115,7 @@ button { cursor: pointer; }
   .exam-topbar { grid-template-columns: 1fr auto; }
   .exam-topbar .btn-danger { grid-column: 1 / -1; width: 100%; }
   .reference-panel, .writing-panel { padding: 16px; }
-  .typing-line { font-size: 1.15rem; min-height: 68px; }
+  .typing-line { font-size: 1.05rem; min-height: 68px; }
   .exam-footer { flex-direction: column; }
 }
 
